@@ -2542,8 +2542,11 @@
 
         function drawBarHighlight(series, point) {
             octx.lineWidth = series.bars.lineWidth;
-            octx.strokeStyle = $.color.parse(series.color).scale('a', 0.5).toString();
-            var fillStyle = $.color.parse(series.color).scale('a', 0.5).toString();
+            // PERPETUALLY ALTERATION ========================++++++++++++++++++++++++++
+            // MAJOR ALTERATION THAT GIVES CONTROL OVER THE FILL OVERLAY FROM THE FLOT OPTIONS
+            octx.strokeStyle = $.color.parse((series.bars.highlightColor||series.color)).scale('a', (series.bars.highlightOpacity || 0.5)).toString();
+            var fillStyle = $.color.parse((series.bars.highlightColor||series.color)).scale('a', (series.bars.highlightOpacity || 0.5)).toString();
+            // END PERPETUALLY ALTERATION ========================++++++++++++++++++++++++++
             var barLeft = series.bars.align == "left" ? 0 : -series.bars.barWidth/2;
             drawBar(point[0], point[1], point[2] || 0, barLeft, barLeft + series.bars.barWidth,
                     0, function () { return fillStyle; }, series.xaxis, series.yaxis, octx, series.bars.horizontal, series.bars.lineWidth);
